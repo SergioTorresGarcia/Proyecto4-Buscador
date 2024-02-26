@@ -1,31 +1,24 @@
-import express, { Request, Response } from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const app = express();
-app.use(express.json()); // parsea las req a json
+import "dotenv/config";
+import { app } from "./app";
+import { AppDataSource } from "./database/db";
 
 
 const PORT = process.env.PORT || 4000
 
-app.get('/hello', (req: Request, res: Response) => {
-    res.send('Hello world!')
-});
 
-app.get("/healthy", (req, res) => {
-    res.status(200).json(
-        {
-            "success": true,
-            "message": "Server is healthy"
-        }
-    )
-});
+const startServer = () => {
+    AppDataSource.initialize()
+        .then(() => {
+            console.log("database connected")
+            app.listen(PORT, () => {
+                console.log(`Server is running on port: ${PORT}`);
+            })
+        })
+        .catch((error: any) => {
+            console.log(error)
+        })
+}
 
 
-
-
-app.listen(PORT, () => {
-    console.log("Server is running");
-
-})
+startServer();
+// npm run dev <- command that runs the server
