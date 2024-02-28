@@ -2,6 +2,31 @@ import { Request, Response } from "express"
 import { Service } from "../src/models/Service";
 import { User } from "../src/models/User";
 
+export const postServices = async (req: Request, res: Response) => {
+    try {
+        const { service_name, description } = req.body
+
+        const newService = await Service.create({
+            serviceName: service_name,
+            description: description
+        }).save()
+
+        res.status(201).json({
+            success: true,
+            message: "Service created successfully",
+            data: newService
+        })
+
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Service cannot be created",
+            error: error
+        })
+    }
+}
+
 export const getServices = async (req: Request, res: Response) => {
     try {
 
@@ -27,30 +52,6 @@ export const getServices = async (req: Request, res: Response) => {
     }
 }
 
-export const postServices = async (req: Request, res: Response) => {
-    try {
-        const { service_name, description } = req.body
-
-        const newService = await Service.create({
-            serviceName: service_name,
-            description: description
-        }).save()
-
-        res.status(201).json({
-            success: true,
-            message: "Service created successfully",
-            data: newService
-        })
-
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Service cannot be created",
-            error: error
-        })
-    }
-}
 export const putServicesId = async (req: Request, res: Response) => {
     try {
         const serviceId = req.params.id;

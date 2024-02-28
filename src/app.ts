@@ -3,7 +3,7 @@ import express from "express";
 import { register } from "../controllers/authController";
 import { deleteUser, getUsers, getUsersProfile, putUserProfile } from "../controllers/userController";
 
-import { getAppointments } from "../controllers/appointmentsController";
+import { deleteAppointmentById, getAppointments, getAppointmentsId, postAppointments, putAppointmentsId } from "../controllers/appointmentsController";
 import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
 import { deleteService, getServices, postServices, putServicesId } from "../controllers/serviceController";
 
@@ -33,13 +33,11 @@ app.get("/healthy", (req, res) => {
 // app.delete("/roles/:id", deleteRole)
 
 // Autenticación:
-
 app.post("/api/auth/register", register) // <--------------------------------- WORKING!!!
 // POST /api/auth/login <------------------------ pending
 
 
 // Usuarios:
-
 app.get("/api/users", getUsers) // <------------------------------------------ WORKING!!! (falta super_admin)
 app.get("/api/users/:id", getUsersProfile) // <------------------------------- WORKING!!!  
 app.put("/api/users/:id", putUserProfile) // <-------------------------------- WORKING!!! 
@@ -49,15 +47,14 @@ app.delete("/api/users/:id", deleteUser) // <--------------------------------- W
 
 
 // Citas:
-
-// app.post("/api/appointments", postAppointments) // POST /api/appointments
-// app.put("/api/appointments", putAppointments) // PUT /api/appointments
-// app.get("/api/appointments/:id", getAppointmentsId) // GET /api/appointments/:id
-// app.get("/api/appointments", getAppointments) // GET /api/appointments
+app.post("/api/appointments", postAppointments) // <------------------------- WORKING!!!
+app.put("/api/appointments/:id", putAppointmentsId) // <--------------------- WORKING!!!
+app.get("/api/appointments/:id", getAppointmentsId) // <--------------------- WORKING!!!
+app.get("/api/appointments", getAppointments) // <--------------------------- WORKING!!!
+app.delete("/api/appointments/:id", deleteAppointmentById) // <-------------- WORKING!!!
 
 
 // Servicios:
-
 app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
 app.post("/api/services", postServices) // <--------------------------------- WORKING!!! (falta super_admin) XTRA
 app.put("/api/services/:id", putServicesId) // <----------------------------- WORKING!!! (falta super_admin) XTRA

@@ -1,34 +1,155 @@
 import { Request, Response } from "express"
+import { Appointment } from "../src/models/Appointment"
 
-export const getAppointments = (req: Request, res: Response) => {
-    res.status(200).json({
-        "success": true,
-        "message": "Appointments retrieved successfuly"
-    })
+export const postAppointments = async (req: Request, res: Response) => {
+    try {
+        const { appointment_date, user_id, service_id } = req.body
+
+        const newAppointment = await Appointment.create({
+            appointmentDate: appointment_date,
+            userId: user_id,
+            serviceId: service_id
+        }).save()
+
+        res.status(201).json({
+            success: true,
+            message: "Service created successfully",
+            data: newAppointment
+        })
+
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment cannot be created",
+            error: error
+        })
+    }
 }
-export const createAppointment = (req: Request, res: Response) => {
-    req.body;
 
-    res.status(201).json({
-        "success": true,
-        "message": "Appointment created successfuly"
-    })
+export const getAppointments = async (req: Request, res: Response) => {
+    try {
+        const appointment = await Appointment.find({
+            select: {
+                id: true,
+                appointmentDate: true,
+                userId: true,
+                serviceId: true
+            }
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Appointments retrieved successfuly",
+            data: appointment
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointments cannot be retrieved",
+            error: error
+        })
+    }
 }
-export const updateAppointment = (req: Request, res: Response) => {
-    req.body;
-    req.params.id;
+export const getAppointmentsId = async (req: Request, res: Response) => {
+    try {
+        const appointmentId = req.params.id
 
-    res.status(200).json({
-        "success": true,
-        "message": "Appointment updated successfuly"
-    })
+        const appointment = await Appointment.findOneBy({
+            id: parseInt(appointmentId)
+        })
+
+        if (!appointment) {
+            return res.status(404).json({
+                success: false,
+                message: "Appointment not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Appointment retrieved successfuly",
+            data: appointment
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment cannot be retrieved",
+            error: error
+        })
+    }
 }
-export const deleteAppointment = (req: Request, res: Response) => {
-    req.params.id;
-    console.log(req.params.id);
+export const putAppointmentsId = async (req: Request, res: Response) => {
+    try {
+        const appointmentId = req.params.id;
+        const { appointment_date, user_id, service_id } = req.body;
 
-    res.status(200).json({
-        "success": true,
-        "message": "Appointment deleted successfuly"
-    })
+        // validar datos
+        const appointment = await Appointment.findOneBy({
+            id: parseInt(appointmentId)
+        })
+
+        if (!appointment) {
+            return res.status(404).json({
+                success: false,
+                message: "Appointment not found"
+            })
+        }
+
+        const updatedAppointment = await Appointment.update(
+            {
+                id: parseInt(appointmentId)
+            },
+            {
+                appointmentDate: appointment_date,
+                userId: user_id,
+                serviceId: service_id
+            }
+        )
+
+        res.status(200).json({
+            success: true,
+            message: "Appointment updated successfuly",
+            data: updatedAppointment
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment cannot be updated",
+            error: error
+        })
+    }
+}
+export const deleteAppointmentById = async (req: Request, res: Response) => {
+    try {
+        const appointmentId = req.params.id;
+
+        // validar datos
+        const appointment = await Appointment.findOneBy({
+            id: parseInt(appointmentId)
+        })
+
+        if (!appointment) {
+            return res.status(404).json({
+                success: false,
+                message: "Appointment not found"
+            })
+        }
+
+        // actualizar DB
+        await Appointment.remove(appointment)
+        res.status(200).json({
+            success: true,
+            message: "Appointment deleted successfuly"
+
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment cannot be deleted",
+            error: error
+        })
+    }
 }
