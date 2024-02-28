@@ -1,6 +1,5 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Appointment } from "./Appointment";
-import { User } from "./User";
 
 
 @Entity('services')

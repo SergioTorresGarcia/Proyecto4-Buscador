@@ -1,34 +1,104 @@
 import { Request, Response } from "express"
+import { Role } from "../src/models/Role";
 
 export const getRoles = (req: Request, res: Response) => {
     res.status(200).json({
-        "success": true,
-        "message": "Roles retrieved successfuly"
+        success: true,
+        message: "Roles retrieved successfuly"
     })
-}
-export const createRole = (req: Request, res: Response) => {
-    req.body;
+    console.log(req.body);
 
-    res.status(201).json({
-        "success": true,
-        "message": "Role created successfuly"
-    })
 }
-export const updateRole = (req: Request, res: Response) => {
-    req.body;
-    req.params.id;
+export const createRole = async (req: Request, res: Response) => {
+    try {
+        // recuperar la info a traves del body
+        const name = req.body.name;
 
-    res.status(200).json({
-        "success": true,
-        "message": "Role updated successfuly"
-    })
+        // validación del largo del input
+        if (name.length >= 40 || name.length <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Role name must be between 1 and 40 characters"
+            })
+        }
+
+        // podriamos tratar el dato
+
+        // guardamos el dato
+        const newRole = await Role.create({
+            name: name
+        }).save()
+
+        res.status(201).json({
+            success: true,
+            message: "Role created successfuly",
+            data: newRole
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Role cannot be created",
+            error: error
+        })
+    }
+}
+
+export const updateRole = async (req: Request, res: Response) => {
+
+    try {
+        // recuperar la info a traves del body
+        const name = req.body.name;
+        const userId = parseInt(req.params.id);
+
+        // validación del largo del input
+        if (name.length >= 40 || name.length <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Role name must be between 1 and 40 characters"
+            })
+        }
+
+        // podriamos tratar el dato
+
+        // guardamos el dato
+        const newRole = await Role.update(
+            { name: name },
+            { id: userId }
+        )
+
+
+        res.status(200).json({
+            success: true,
+            message: "Role updated successfuly",
+            data: newRole
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Role was not updated",
+            error: error
+        })
+    }
 }
 export const deleteRole = (req: Request, res: Response) => {
-    req.params.id;
-    console.log(req.params.id);
+    try {
+        const userId = parseInt(req.params.id);
 
-    res.status(200).json({
-        "success": true,
-        "message": "Role deleted successfuly"
-    })
+        Role.delete(
+            { id: userId }
+        )
+
+        res.status(200).json({
+            "success": true,
+            "message": "Role deleted successfuly"
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Role was not updated",
+            error: error
+        })
+    }
 }
