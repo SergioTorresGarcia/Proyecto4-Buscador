@@ -1,11 +1,11 @@
 import express from "express";
 
 import { register } from "../controllers/authController";
-import { deleteUser, getUsers, getUsersProfile, putUserProfile } from "../controllers/userController";
+import { deleteUserProfile, getUsers, getUserProfile, putUserProfile } from "../controllers/userController";
 
-import { deleteAppointmentById, getAppointments, getAppointmentsId, postAppointments, putAppointmentsId } from "../controllers/appointmentsController";
+import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
 import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
-import { deleteService, getServices, postServices, putServicesId } from "../controllers/serviceController";
+import { deleteServiceId, getServices, postServices, putServiceId } from "../controllers/serviceController";
 
 export const app = express();
 app.use(express.json());
@@ -33,30 +33,30 @@ app.get("/healthy", (req, res) => {
 // app.delete("/roles/:id", deleteRole)
 
 // Autenticación:
-app.post("/api/auth/register", register) // <--------------------------------- WORKING!!!
-// POST /api/auth/login <------------------------ pending
+app.post("/api/auth/register", register) // <-------------------------------- WORKING!!!
+// POST /api/auth/login <---------------------------------------------------- pending
 
 
 // Usuarios:
-app.get("/api/users", getUsers) // <------------------------------------------ WORKING!!! (falta super_admin)
-app.get("/api/users/:id", getUsersProfile) // <------------------------------- WORKING!!!  
-app.put("/api/users/:id", putUserProfile) // <-------------------------------- WORKING!!! 
+app.get("/api/users", getUsers) // <----------------------------------------- WORKING!!! (falta super_admin)
+app.get("/api/users/:id", getUserProfile) // <------------------------------- WORKING!!!  
+app.put("/api/users/:id", putUserProfile) // <------------------------------- WORKING!!! 
 //     GET /api/users?email=ejemplo@ejemplo.com (super_admin) XTRA
-app.delete("/api/users/:id", deleteUser) // <--------------------------------- WORKING!!!  (falta super_admin) XTRA
+app.delete("/api/users/:id", deleteUserProfile) // <------------------------- WORKING!!!  (falta super_admin) XTRA
 // app.put("/api/users/:id/role", putUserRole)//     PUT /api/users/:id/role (super_admin) XTRA
 
 
 // Citas:
 app.post("/api/appointments", postAppointments) // <------------------------- WORKING!!!
-app.put("/api/appointments/:id", putAppointmentsId) // <--------------------- WORKING!!!
-app.get("/api/appointments/:id", getAppointmentsId) // <--------------------- WORKING!!!
 app.get("/api/appointments", getAppointments) // <--------------------------- WORKING!!!
-app.delete("/api/appointments/:id", deleteAppointmentById) // <-------------- WORKING!!!
+app.get("/api/appointments/:id", getAppointmentId) // <---------------------- WORKING!!!
+app.put("/api/appointments/:id", putAppointmentId) // <---------------------- WORKING!!!
+app.delete("/api/appointments/:id", deleteAppointmentId) // <---------------- WORKING!!!
 
 
 // Servicios:
-app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
 app.post("/api/services", postServices) // <--------------------------------- WORKING!!! (falta super_admin) XTRA
-app.put("/api/services/:id", putServicesId) // <----------------------------- WORKING!!! (falta super_admin) XTRA
-app.delete("/api/services/:id", deleteService) // <-------------------------- WORKING!!! (falta super_admin) XTRA
+app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
+app.put("/api/services/:id", putServiceId) // <------------------------------ WORKING!!! (falta super_admin) XTRA
+app.delete("/api/services/:id", deleteServiceId) // <------------------------ WORKING!!! (falta super_admin) XTRA
 

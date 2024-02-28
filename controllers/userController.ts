@@ -29,7 +29,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 }
 
-export const getUsersProfile = async (req: Request, res: Response) => {
+export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id
 
@@ -126,7 +126,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
 }
 
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUserProfile = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
 

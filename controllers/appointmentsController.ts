@@ -52,7 +52,7 @@ export const getAppointments = async (req: Request, res: Response) => {
         })
     }
 }
-export const getAppointmentsId = async (req: Request, res: Response) => {
+export const getAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id
 
@@ -80,7 +80,7 @@ export const getAppointmentsId = async (req: Request, res: Response) => {
         })
     }
 }
-export const putAppointmentsId = async (req: Request, res: Response) => {
+export const putAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id;
         const { appointment_date, user_id, service_id } = req.body;
@@ -122,7 +122,7 @@ export const putAppointmentsId = async (req: Request, res: Response) => {
         })
     }
 }
-export const deleteAppointmentById = async (req: Request, res: Response) => {
+export const deleteAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id;
 

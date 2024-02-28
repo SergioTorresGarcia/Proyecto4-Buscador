@@ -52,7 +52,7 @@ export const getServices = async (req: Request, res: Response) => {
     }
 }
 
-export const putServicesId = async (req: Request, res: Response) => {
+export const putServiceId = async (req: Request, res: Response) => {
     try {
         const serviceId = req.params.id;
         const { service_name, description } = req.body;
@@ -94,7 +94,7 @@ export const putServicesId = async (req: Request, res: Response) => {
     }
 
 }
-export const deleteService = async (req: Request, res: Response) => {
+export const deleteServiceId = async (req: Request, res: Response) => {
     try {
         const serviceId = req.params.id;
 
