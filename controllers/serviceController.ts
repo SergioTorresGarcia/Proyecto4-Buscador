@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { Service } from "../src/models/Service";
+import { User } from "../src/models/User";
 
 export const getServices = async (req: Request, res: Response) => {
     try {
@@ -50,21 +51,76 @@ export const postServices = async (req: Request, res: Response) => {
         })
     }
 }
-export const updateService = (req: Request, res: Response) => {
-    req.body;
-    req.params.id;
+export const putServicesId = async (req: Request, res: Response) => {
+    try {
+        const serviceId = req.params.id;
+        const { service_name, description } = req.body;
 
-    res.status(200).json({
-        "success": true,
-        "message": "Service updated successfuly"
-    })
+        // validar datos
+        const service = await User.findOneBy({
+            id: parseInt(serviceId)
+        })
+
+        if (!service) {
+            return res.status(404).json({
+                success: false,
+                message: "Service not found"
+            })
+        }
+
+        const updatedService = await Service.update(
+            {
+                id: parseInt(serviceId)
+            },
+            {
+                serviceName: service_name,
+                description: description
+            }
+        )
+
+        res.status(200).json({
+            success: true,
+            message: "Service updated successfuly",
+            data: updatedService
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Service cannot be updated",
+            error: error
+        })
+
+    }
+
 }
-export const deleteService = (req: Request, res: Response) => {
-    req.params.id;
-    console.log(req.params.id);
+export const deleteService = async (req: Request, res: Response) => {
+    try {
+        const serviceId = req.params.id;
 
-    res.status(200).json({
-        "success": true,
-        "message": "Service deleted successfuly"
-    })
+        // validar datos
+        const service = await Service.findOneBy({
+            id: parseInt(serviceId)
+        })
+
+        if (!service) {
+            return res.status(404).json({
+                success: false,
+                message: "Service not found"
+            })
+        }
+
+        // actualizar DB
+        await Service.remove(service)
+        res.status(200).json({
+            success: true,
+            message: "Service deleted successfuly"
+
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Service cannot be deleted",
+            error: error
+        })
+    }
 }

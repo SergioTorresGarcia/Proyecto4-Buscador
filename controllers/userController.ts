@@ -125,15 +125,6 @@ export const putUserProfile = async (req: Request, res: Response) => {
     }
 }
 
-// export const updateUser = (req: Request, res: Response) => {
-// req.body;
-// req.params.id;
-
-// res.status(200).json({
-//     "success": true,
-//     "message": "User updated successfuly"
-// })
-// }
 
 export const deleteUser = async (req: Request, res: Response) => {
     try {

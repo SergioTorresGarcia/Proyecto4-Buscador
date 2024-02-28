@@ -5,7 +5,7 @@ import { deleteUser, getUsers, getUsersProfile, putUserProfile } from "../contro
 
 import { getAppointments } from "../controllers/appointmentsController";
 import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
-import { getServices, postServices } from "../controllers/serviceController";
+import { deleteService, getServices, postServices, putServicesId } from "../controllers/serviceController";
 
 export const app = express();
 app.use(express.json());
@@ -40,9 +40,9 @@ app.post("/api/auth/register", register) // <--------------------------------- W
 
 // Usuarios:
 
-app.get("/api/users", getUsers) // <--------------------------------- WORKING!!! (falta filtro super_admin)
-app.get("/api/users/:id", getUsersProfile) // <--------------------------------- WORKING!!!  
-app.put("/api/users/:id", putUserProfile) // <--------------------------------- WORKING!!! 
+app.get("/api/users", getUsers) // <------------------------------------------ WORKING!!! (falta super_admin)
+app.get("/api/users/:id", getUsersProfile) // <------------------------------- WORKING!!!  
+app.put("/api/users/:id", putUserProfile) // <-------------------------------- WORKING!!! 
 //     GET /api/users?email=ejemplo@ejemplo.com (super_admin) XTRA
 app.delete("/api/users/:id", deleteUser) // <--------------------------------- WORKING!!!  (falta super_admin) XTRA
 // app.put("/api/users/:id/role", putUserRole)//     PUT /api/users/:id/role (super_admin) XTRA
@@ -58,9 +58,8 @@ app.delete("/api/users/:id", deleteUser) // <--------------------------------- W
 
 // Servicios:
 
-app.get("/api/services", getServices) // <--------------------------------- WORKING!!!
-
+app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
 app.post("/api/services", postServices) // <--------------------------------- WORKING!!! (falta super_admin) XTRA
-// app.put("/api/services/:id", putServicesId) // PUT /api/services/:id (super_admin) XTRA
-// app.delete("/api/services", deleteServices) // DELETE /api/services/:id (super_admin) XTRA
+app.put("/api/services/:id", putServicesId) // <----------------------------- WORKING!!! (falta super_admin) XTRA
+app.delete("/api/services/:id", deleteService) // <-------------------------- WORKING!!! (falta super_admin) XTRA
 
