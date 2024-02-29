@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
     try {
         if (req.tokenData.roleName !== 'super_admin') {
-            res.status(401).json({
+            return res.status(401).json({
                 success: false,
                 message: "UNAUTHORIZED"
             })
