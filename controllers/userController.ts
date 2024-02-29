@@ -165,6 +165,54 @@ export const putUserProfile = async (req: Request, res: Response) => {
     }
 }
 
+export const putUserRole = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        const roleId = req.params.role;
+
+        // validar datos
+        const user = await User.findOneBy({
+            id: parseInt(userId)
+        })
+        // const role = await User.findOne({
+        //     where: {
+        //         role: { id: parseInt(roleId) }
+        //     }
+        // })
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        // actualizar DB
+        const updatedUserRole = await User.update(
+            {
+                id: parseInt(userId)
+            },
+            {
+                role: { id: parseInt(roleId) }
+                // role: { name: roleId}
+            }
+        )
+
+        res.status(200).json({
+            success: true,
+            message: "User's Role updated successfuly",
+            data: updatedUserRole
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User's role cannot be updated",
+            error: error
+        })
+
+    }
+}
+
 
 export const deleteUserProfile = async (req: Request, res: Response) => {
     try {
