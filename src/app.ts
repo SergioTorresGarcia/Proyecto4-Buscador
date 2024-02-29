@@ -1,7 +1,7 @@
 import express from "express";
 
 import { login, register } from "../controllers/authController";
-import { deleteUserProfile, getUsers, getUserProfile, putUserProfile } from "../controllers/userController";
+import { deleteUserProfile, getUsers, getUserProfile, putUserProfile, getUserByEmail } from "../controllers/userController";
 
 import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
 // import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
@@ -43,7 +43,7 @@ app.post("/api/auth/login", login) // <-------------------------------------- WO
 app.get("/api/users", auth, isSuperAdmin, getUsers) // <----------------------------------------- WORKING!!!
 app.get("/api/users/:id", auth, getUserProfile) // <------------------------------- WORKING!!!  
 app.put("/api/users/:id", putUserProfile) // <------------------------------- WORKING!!! 
-//     GET /api/users?email=ejemplo@ejemplo.com (super_admin) XTRA
+app.get("/api/user", auth, isSuperAdmin, getUserByEmail) // (super_admin) XTRA.   
 app.delete("/api/users/:id", isSuperAdmin, deleteUserProfile) // <------------------------- WORKING!!!  XTRA
 // app.put("/api/users/:id/role", putUserRole)//     PUT /api/users/:id/role (super_admin) XTRA
 

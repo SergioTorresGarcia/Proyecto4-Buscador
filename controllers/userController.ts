@@ -10,8 +10,12 @@ export const getUsers = async (req: Request, res: Response) => {
                 id: true,
                 firstName: true,
                 lastName: true,
-                email: true
+                email: true,
+            },
+            relations: {
+                role: true
             }
+
         });
 
         res.status(200).json({
@@ -53,6 +57,42 @@ export const getUserProfile = async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: "Users cannot be retrieved",
+            error: error
+        })
+    }
+
+}
+
+export const getUserByEmail = async (req: Request, res: Response) => {
+    try {
+        const userEmail = req.query.email as string
+        if (!userEmail) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required"
+            });
+        }
+
+        const user = await User.findOneBy({
+            email: userEmail
+        })
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "User retrieved successfuly",
+            data: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User cannot be retrieved",
             error: error
         })
     }
