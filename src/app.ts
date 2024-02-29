@@ -4,8 +4,10 @@ import { login, register } from "../controllers/authController";
 import { deleteUserProfile, getUsers, getUserProfile, putUserProfile } from "../controllers/userController";
 
 import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
-import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
+// import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
 import { deleteServiceId, getServices, postServices, putServiceId } from "../controllers/serviceController";
+import { auth } from "./middlewares/auth";
+import { isSuperAdmin } from "./middlewares/isSuperAdmin";
 
 export const app = express();
 app.use(express.json());
@@ -34,15 +36,15 @@ app.get("/healthy", (req, res) => {
 
 // Autenticación:
 app.post("/api/auth/register", register) // <-------------------------------- WORKING!!!
-app.post("/api/auth/login", login) // POST /api/auth/login <----------------- pending
+app.post("/api/auth/login", login) // <-------------------------------------- WORKING!!!
 
 
 // Usuarios:
-app.get("/api/users", getUsers) // <----------------------------------------- WORKING!!! (falta super_admin)
-app.get("/api/users/:id", getUserProfile) // <------------------------------- WORKING!!!  
+app.get("/api/users", auth, isSuperAdmin, getUsers) // <----------------------------------------- WORKING!!!
+app.get("/api/users/:id", auth, getUserProfile) // <------------------------------- WORKING!!!  
 app.put("/api/users/:id", putUserProfile) // <------------------------------- WORKING!!! 
 //     GET /api/users?email=ejemplo@ejemplo.com (super_admin) XTRA
-app.delete("/api/users/:id", deleteUserProfile) // <------------------------- WORKING!!!  (falta super_admin) XTRA
+app.delete("/api/users/:id", isSuperAdmin, deleteUserProfile) // <------------------------- WORKING!!!  XTRA
 // app.put("/api/users/:id/role", putUserRole)//     PUT /api/users/:id/role (super_admin) XTRA
 
 
@@ -55,10 +57,10 @@ app.delete("/api/appointments/:id", deleteAppointmentId) // <---------------- WO
 
 
 // Servicios:
-app.post("/api/services", postServices) // <--------------------------------- WORKING!!! (falta super_admin) XTRA
-app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
-app.put("/api/services/:id", putServiceId) // <------------------------------ WORKING!!! (falta super_admin) XTRA
-app.delete("/api/services/:id", deleteServiceId) // <------------------------ WORKING!!! (falta super_admin) XTRA
+app.post("/api/services", isSuperAdmin, postServices) // <--------------------------------- WORKING!!! XTRA
+app.get("/api/services", getServices) // <------------------------------------------------- WORKING!!!
+app.put("/api/services/:id", isSuperAdmin, putServiceId) // <------------------------------ WORKING!!! XTRA
+app.delete("/api/services/:id", isSuperAdmin, deleteServiceId) // <------------------------ WORKING!!! XTRA
 
 
 
