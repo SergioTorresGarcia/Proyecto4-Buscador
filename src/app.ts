@@ -1,6 +1,6 @@
 import express from "express";
 
-import { register } from "../controllers/authController";
+import { login, register } from "../controllers/authController";
 import { deleteUserProfile, getUsers, getUserProfile, putUserProfile } from "../controllers/userController";
 
 import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
@@ -34,7 +34,7 @@ app.get("/healthy", (req, res) => {
 
 // Autenticación:
 app.post("/api/auth/register", register) // <-------------------------------- WORKING!!!
-// POST /api/auth/login <---------------------------------------------------- pending
+app.post("/api/auth/login", login) // POST /api/auth/login <----------------- pending
 
 
 // Usuarios:
@@ -60,3 +60,6 @@ app.get("/api/services", getServices) // <----------------------------------- WO
 app.put("/api/services/:id", putServiceId) // <------------------------------ WORKING!!! (falta super_admin) XTRA
 app.delete("/api/services/:id", deleteServiceId) // <------------------------ WORKING!!! (falta super_admin) XTRA
 
+
+
+// REVISAR Y COMPLETAR VALIDACIONES!!!!!!!!!!!!!!

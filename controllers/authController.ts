@@ -2,6 +2,7 @@
 import { Request, Response } from "express"
 import bcrypt from "bcrypt";
 import { User } from "../src/models/User";
+import jwt from "jsonwebtoken";
 
 
 export const register = async (req: Request, res: Response) => {
@@ -50,18 +51,79 @@ export const register = async (req: Request, res: Response) => {
     }
 }
 
-// export const login = (req: Request, res: Response) => {
-//     try {
-//         res.status(201).json({
-//             success: true,
-//             message: "User logged in successfully"
-//         })
+export const login = async (req: Request, res: Response) => {
+    try {
+        //recuperar info
+        const email = req.body.email;
+        const password = req.body.password;
 
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "User cannot be logged in",
-//             error: error
-//         })
-//     }
-// }
+        //validación email
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Email and password are needed"
+            })
+        }
+        // buscar user en DB
+        const user = await User.findOne({
+            where: {
+                email: email
+            },
+            relations: {
+                role: true
+            },
+            select: {
+                id: true,
+                passwordHash: true,
+                email: true,
+                role: {
+                    name: true
+                }
+            }
+        })
+        // dar error si no existe
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+        // devolver user
+        // console.log(user);
+
+        // comparar passwords
+        const isValidPassword = bcrypt.compareSync(password, user.passwordHash);
+
+        if (!isValidPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Email and password invalid"
+            })
+        }
+
+        // crear TOKEN
+        const token = jwt.sign({
+            userId: user.id,
+            roleName: user.role.name
+        },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "2h"
+            }
+
+        )
+
+        res.status(200).json({
+            success: true,
+            message: "User logged in successfully",
+            token: token
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User cannot be logged in",
+            error: error
+        })
+    }
+}
