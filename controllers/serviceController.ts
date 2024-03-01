@@ -58,7 +58,7 @@ export const putServiceId = async (req: Request, res: Response) => {
         const { service_name, description } = req.body;
 
         // validar datos
-        const service = await User.findOneBy({
+        const service = await Service.findOneBy({
             id: parseInt(serviceId)
         })
 

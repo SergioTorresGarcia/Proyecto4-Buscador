@@ -1,10 +1,10 @@
 import express from "express";
 
 import { login, register } from "../controllers/authController";
-import { deleteUserProfile, getUsers, getUserProfile, putUserProfile, getUserByEmail, putUserRole } from "../controllers/userController";
+import { deleteUserProfile, getUsers, getUserProfile, putUserProfile, getUserByEmail, putUserRole, putSelfProfile } from "../controllers/userController";
 
 import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
-// import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
+import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
 import { deleteServiceId, getServices, postServices, putServiceId } from "../controllers/serviceController";
 import { auth } from "./middlewares/auth";
 import { isSuperAdmin } from "./middlewares/isSuperAdmin";
@@ -28,11 +28,11 @@ app.get("/healthy", (req, res) => {
 //             ENDPOINTS del proyecto:                //
 ////////////////////////////////////////////////////////
 
-// TABLE 1 - roles routes
-// app.get("/roles", getRoles)
-// app.post("/roles", createRole)
-// app.put("/roles/:id", updateRole)
-// app.delete("/roles/:id", deleteRole)
+// roles routes
+app.get("/roles", getRoles) // <--------------------------------------------- WORKING!!!  XTRA
+app.post("/roles", createRole) // <------------------------------------------ WORKING!!!  XTRA
+app.put("/roles/:id", updateRole) // <--------------------------------------- WORKING!!!  XTRA
+app.delete("/roles/:id", deleteRole) // <------------------------------------ WORKING!!!  XTRA
 
 // Autenticación:
 app.post("/api/auth/register", register) // <-------------------------------- WORKING!!!
@@ -40,28 +40,28 @@ app.post("/api/auth/login", login) // <-------------------------------------- WO
 
 
 // Usuarios:
-app.get("/api/users", auth, isSuperAdmin, getUsers) // <--------------------- WORKING!!!
+app.get("/api/users", auth, isSuperAdmin, getUsers) // <--------------------- WORKING!!!  XTRA (+ query search)
 app.get("/api/users/:id", auth, getUserProfile) // <------------------------- WORKING!!!  
-app.put("/api/users/:id", putUserProfile) // <------------------------------- WORKING!!! 
-app.get("/api/user", auth, isSuperAdmin, getUserByEmail) // <---------------- WORKING!!!  XTRA   
-app.delete("/api/users/:id", isSuperAdmin, deleteUserProfile) // <----------- WORKING!!!  XTRA
-app.put("/api/users/:id/:role", putUserRole) // <---------------------------- WORKING!!!  XTRA
+app.put("/api/users/:id", auth, putUserProfile) // <------------------------- WORKING!!!
+app.put("/api/user/self", auth, putSelfProfile) // <------------------------- WORKING!!! 
+app.delete("/api/users/:id", auth, isSuperAdmin, deleteUserProfile) // <----- WORKING!!!  XTRA
+app.put("/api/users/:id/:role", auth, isSuperAdmin, putUserRole) // <-------- WORKING!!!  XTRA
 
 
 // Citas:
-app.post("/api/appointments", postAppointments) // <------------------------- WORKING!!!
-app.get("/api/appointments", getAppointments) // <--------------------------- WORKING!!!
-app.get("/api/appointments/:id", getAppointmentId) // <---------------------- WORKING!!!
-app.put("/api/appointments/:id", putAppointmentId) // <---------------------- WORKING!!!
-app.delete("/api/appointments/:id", deleteAppointmentId) // <---------------- WORKING!!!
+app.post("/api/appointments", auth, postAppointments) // <------------------- WORKING!!!
+app.get("/api/appointments", auth, getAppointments) // <--------------------- WORKING!!!
+app.get("/api/appointments/:id", auth, getAppointmentId) // <---------------- WORKING!!!
+app.put("/api/appointments/:id", auth, putAppointmentId) // <---------------- WORKING!!!
+app.delete("/api/appointments/:id", auth, deleteAppointmentId) // <---------- WORKING!!!
 
 
 // Servicios:
-app.post("/api/services", isSuperAdmin, postServices) // <------------------- WORKING!!!  XTRA
+app.post("/api/services", auth, isSuperAdmin, postServices) // <------------- WORKING!!!  XTRA
 app.get("/api/services", getServices) // <----------------------------------- WORKING!!!
-app.put("/api/services/:id", isSuperAdmin, putServiceId) // <---------------- WORKING!!!  XTRA
-app.delete("/api/services/:id", isSuperAdmin, deleteServiceId) // <---------- WORKING!!!  XTRA
+app.put("/api/services/:id", auth, isSuperAdmin, putServiceId) // <---------- WORKING!!!  XTRA
+app.delete("/api/services/:id", auth, isSuperAdmin, deleteServiceId) // <---- WORKING!!!  XTRA
 
 
 
-// REVISAR Y COMPLETAR VALIDACIONES!!!!!!!!!!!!!!
+// REVISAR Y COMPLETAR VALIDACIONES !!!!!!!!!!!!!!

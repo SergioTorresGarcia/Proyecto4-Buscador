@@ -28,12 +28,13 @@ export const register = async (req: Request, res: Response) => {
                 }
             )
         }
+
         const newUser = await User.create({
             firstName: first_name,
             lastName: last_name,
             email: email,
             passwordHash: passwordEncrypted,
-            role: { id: 3 }
+            role: { id: 1 }
         }).save()
 
         res.status(201).json({
@@ -108,7 +109,7 @@ export const login = async (req: Request, res: Response) => {
         },
             process.env.JWT_SECRET as string,
             {
-                expiresIn: "2h"
+                expiresIn: "72h"
             }
 
         )

@@ -17,19 +17,20 @@ export class Users1708989530865 implements MigrationInterface {
                     {
                         name: "first_name",
                         type: "varchar",
-                        length: "255",
+                        length: "100",
                         isNullable: false
                     },
                     {
                         name: "last_name",
                         type: "varchar",
-                        length: "255",
+                        length: "100",
                         isNullable: false
                     },
                     {
                         name: "email",
                         type: "varchar",
-                        length: "255",
+                        length: "100",
+                        isNullable: false,
                         isUnique: true
                     },
                     {
@@ -40,8 +41,20 @@ export class Users1708989530865 implements MigrationInterface {
                     },
                     {
                         name: "role_id",
-                        type: "int"
+                        type: "int",
+                        default: 1
                     },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "now()",
+                    },
+                    {
+                        name: "updated_at",
+                        type: "timestamp",
+                        default: "now()",
+                        onUpdate: "now()"
+                    }
                 ],
                 foreignKeys: [
                     {

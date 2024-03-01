@@ -1,11 +1,31 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../src/models/User";
+import { FindOperator, Like } from "typeorm";
 
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
+        interface queryFilters {
+            email?: FindOperator<string>,
+            name?: FindOperator<string>
+        }
+
+        const queryFilters: queryFilters = {}
+
+        // if (req.query.email) { queryFilter.email = email as string } // version simple
+        if (req.query.email) { // version más complicada, va buscando dinámicamente (i.e. "email contiene X")
+            queryFilters.email = Like("%" + req.query.email.toString() + "%");
+        }
+
+        // if (req.query.name) { queryFilter.name = name as string } // version simple
+        if (req.query.name) { // version más complicada, va buscando dinámicamente (i.e. "name contiene X")
+            queryFilters.name = Like("%" + req.query.name.toString() + "%");
+        }
+
         const users = await User.find({
+
+            where: queryFilters,
             select: {
                 id: true,
                 firstName: true,
@@ -15,14 +35,14 @@ export const getUsers = async (req: Request, res: Response) => {
             relations: {
                 role: true
             }
-
         });
 
         res.status(200).json({
             success: true,
             message: "Users retrieved successfuly",
             data: users
-        })
+        });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -73,8 +93,10 @@ export const getUserByEmail = async (req: Request, res: Response) => {
             });
         }
 
-        const user = await User.findOneBy({
-            email: userEmail
+        const user = await User.find({
+            where: {
+                email: userEmail
+            }
         })
 
         if (!user) {
@@ -141,6 +163,48 @@ export const putUserProfile = async (req: Request, res: Response) => {
         const updatedUser = await User.update(
             {
                 id: parseInt(userId)
+            },
+            {
+                firstName: first_name,
+                lastName: last_name,
+                email: email,
+                passwordHash: passwordEncrypted
+            }
+        )
+
+        res.status(200).json({
+            success: true,
+            message: "User updated successfuly",
+            data: updatedUser
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User cannot be updated",
+            error: error
+        })
+
+    }
+}
+
+export const putSelfProfile = async (req: Request, res: Response) => {
+    try {
+        const userSelf = req.tokenData.userId;
+        const { first_name, last_name, email, password } = req.body;
+
+        // validación password
+        if (password.length < 6 || password.length > 10) {
+            return res.status(400).json({
+                success: false,
+                message: "Password invalid"
+            })
+        }
+        const passwordEncrypted = bcrypt.hashSync(password, 8)
+
+        // actualizar DB
+        const updatedUser = await User.update(
+            {
+                id: userSelf
             },
             {
                 firstName: first_name,
