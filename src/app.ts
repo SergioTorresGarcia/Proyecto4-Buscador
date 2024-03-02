@@ -1,7 +1,7 @@
 import express from "express";
 
 import { login, register } from "../controllers/authController";
-import { deleteUserProfile, getUsers, getUserProfile, putUserProfile, getUserByEmail, putUserRole, putSelfProfile } from "../controllers/userController";
+import { deleteUserProfile, getUsers, getUserProfile, putUserProfile, putUserRole, putSelfProfile } from "../controllers/userController";
 
 import { deleteAppointmentId, getAppointments, getAppointmentId, postAppointments, putAppointmentId } from "../controllers/appointmentsController";
 import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController";
