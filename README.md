@@ -1,5 +1,4 @@
-# TATTOO STUDIO
-### Backend project- Searching engine
+# TATTOO STUDIO searching engine
 
 This is the FOURTH PROJECT of the Full Stack Development Bootcamp with Geekshubs Academy.
 
@@ -43,9 +42,9 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 
 ## Challenge
-● Create Endpoints (registration, login, CRUD):
-● Migrations & Seeders for all tables.
-● All non-public endpoints with corresponding middlewares.
+- Create Endpoints (registration, login, CRUD):
+- Migrations & Seeders for all tables.
+- All non-public endpoints with corresponding middlewares.
 
 
 ## Database diagram
@@ -82,14 +81,14 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
     body:
     
-        ``` js
-            {
-                "first_name": "Sergio",
-                "last_name": "Sergio",
-                "email": "sergio@sergio.com",
-                "password": "111111"
-            }
-        ```
+    ``` js
+        {
+            "first_name": "Sergio",
+            "last_name": "Sergio",
+            "email": "sergio@sergio.com",
+            "password": "111111"
+        }
+    ```
 
 -   LOGIN user
 
@@ -97,12 +96,12 @@ personales, visualizables únicamente por el propio usuario (perfil).
         
     body:
 
-        ``` js
-            {
-                "email": "sergio@sergio.com",
-                "password": "111111"
-            }
-        ```
+    ``` js
+        {
+            "email": "sergio@sergio.com",
+            "password": "111111"
+        }
+    ```
 </details>
 <details>
 <summary>USERS routes</summary>
@@ -122,14 +121,14 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
     body:
 
-        ```js
-            {
-                "first_name": "name",
-                "last_name": "surname",
-                "email": "something@domain.com",
-                "password": "111111"
-            }
-        ```
+    ```js
+        {
+            "first_name": "name",
+            "last_name": "surname",
+            "email": "something@domain.com",
+            "password": "111111"
+        }
+    ```
 -   UPDATE USER BY ID
 
         PUT http://localhost:4002/api/users/:id
@@ -295,10 +294,10 @@ you will need -h (host), -P (port), -u (username) and -p (password)
 <details>
   <summary>6. MIGRATIONS & MODELS</summary>
 
-6.1 | Creating MIGRATIONS [Data Definition Language (DDL): with typeorm]: `./src/database/migrations`
-6.2 | Adding them to `DataSource.migrations` in the `db.ts` file: `Role, User, Service, Appointment`
-6.3 | Creating MODELS (entities) [Data Manipulation Language (DML)]
-6.4 | Adding them to `DataSource.entities` in the `db.ts` file: `Roles, Users, Services, Appointments`
+- Creating MIGRATIONS [Data Definition Language (DDL): with typeorm]: `./src/database/migrations`
+- Adding them to `DataSource.migrations` in the `db.ts` file: `Role, User, Service, Appointment`
+- Creating MODELS (entities) [Data Manipulation Language (DML)]
+- Adding them to `DataSource.entities` in the `db.ts` file: `Roles, Users, Services, Appointments`
 </details>
 
 <details>
@@ -319,8 +318,8 @@ you will need -h (host), -P (port), -u (username) and -p (password)
   
   - Additionally we need to control access to our data. We will use 'middleware' functions.
 
-    9.1 | `Auth` (authorisation systembased on TOKENs) will block anything that is not to be seen by the general public. In our case, it only does not affect to `register`, `login` and `getServices` (as those are the endpoints reachable without logging in)
-    9.2 | The `auth()` function verifies an encrypted TOKEN created automatically while logging in. With an active token we have access to other data.
+  -  `Auth` (authorisation systembased on TOKENs) will block anything that is not to be seen by the general public. In our case, it only does not affect to `register`, `login` and `getServices` (as those are the endpoints reachable without logging in)
+  -  The `auth()` function verifies an encrypted TOKEN created automatically while logging in. With an active token we have access to other data.
 </details>
 
 <details>
