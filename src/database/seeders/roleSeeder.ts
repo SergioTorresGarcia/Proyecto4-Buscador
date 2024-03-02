@@ -3,9 +3,8 @@ import { Role } from "../../models/Role";
 import { AppDataSource } from "../db";
 
 
-// Roles hardcodeados, solo hay 3 tipos. 
-//En el modelo, user_id es por defecto "1" (user)
-
+// Roles hardcoded, there are only 3 types. 
+// In the model, user_id = 1 by default ('user')
 const roleSeedDatabase = async () => {
     try {
         await AppDataSource.initialize();
@@ -22,7 +21,7 @@ const roleSeedDatabase = async () => {
         roleSuper.name = "superadmin"
         await roleSuper.save();
 
-        console.log("Roles guardados correctamente");
+        console.log("Roles saved correctly");
 
     } catch (error) {
         console.log(error);

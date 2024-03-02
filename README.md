@@ -2,6 +2,8 @@
 
 This is the FOURTH PROJECT of the Full Stack Development Bootcamp with Geekshubs Academy.
 
+![Tattoo studio](./img/modern-and-creative-tattoo-parlor-with-a-chair-brutal-interior-design-photo.jpg)
+
 <div align="center">
 <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /><img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" /><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /><img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js"/><img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" /><img src="https://img.shields.io/badge/DOCKER-2020BF?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
 </div>
@@ -113,7 +115,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 - GET USER BY ID
 
-        GET http://localhost:4002/api/users/:id
+    GET http://localhost:4002/api/users/:id
 
 -   UPDATE PROFILE (for the currently logged user)
 

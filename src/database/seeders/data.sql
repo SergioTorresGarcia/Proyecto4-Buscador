@@ -1,12 +1,12 @@
 USE project4;
 
--- crear roles en el sistema (user (default), admin y superadmin):
+-- populate DB with roles (user (default), admin & superadmin):
 INSERT INTO roles (id, name) VALUES (1, 'user');
 INSERT INTO roles (id, name) VALUES (2, 'admin');
 INSERT INTO roles (id, name) VALUES (3, 'superadmin');
 
 
--- crear usuarios en el sistema:
+-- populate DB with users:
 INSERT INTO users (first_name, last_name, email, password_hash, role_id) 
 VALUES ("user", "user", "user@user.es", "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO", "1");
 
@@ -25,7 +25,7 @@ VALUES ("user3", "user3", "user3@user.es", "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RA
 INSERT INTO users (first_name, last_name, email, password_hash, role_id) 
 VALUES ("user4", "user4", "user4@user.es", "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO", "1");
 
--- crear servicios en el sistema:
+-- populate DB with services:
 INSERT INTO services (service_name, description)
 VALUES ("Tatuajes personalizados", "Los clientes tendrán la libertad de seleccionar motivos y diseños únicos, personalizando completamente su experiencia de tatuaje de acuerdo a sus preferencias y gustos.");
 
@@ -43,7 +43,7 @@ INSERT INTO services (service_name, description)
 VALUES ("Venta de piercings y otros artículos", "Además de nuestros servicios de aplicación, ofrecemos una selección de piercings y otros artículos relacionados con el arte corporal. Los clientes pueden adquirir productos de calidad para complementar su estilo único.");
 
 
--- crear citas en el sistema:
+-- populate DB with appointments:
 INSERT INTO appointments (id, appointment_date, user_id, service_id)
 VALUES ("1", "2024-03-05", "1", "1");
 

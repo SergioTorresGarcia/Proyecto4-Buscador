@@ -4,19 +4,20 @@ import { User } from "../../models/User";
 import { AppDataSource } from "../db";
 import { faker } from "@faker-js/faker";
 
+//number of fake users we want to populate DB with
 let num_users = 20;
 
-// generar usuarios falsos(con Faker)
+// create false users to populate DB (with Faker)
 const generateFakeUsers = () => {
     const user = new User();
     user.firstName = faker.person.firstName();
     user.lastName = faker.person.lastName();
     user.email = faker.internet.email();
+    // we hardcode a hashed password we already know 
     user.passwordHash = "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO"; // 123456
 
     return user;
 }
-
 
 
 const userSeedDatabase = async () => {
@@ -47,12 +48,14 @@ const userSeedDatabase = async () => {
         const fakeUsers = Array.from({ length: num_users - 2 }, generateFakeUsers);
         await User.save(fakeUsers);
 
-        console.log("Usuarios guardados correctamente");
+        console.log("Users saved correctly");
 
     } catch (error) {
+
         console.log(error);
 
     } finally {
+
         if (AppDataSource) {
             await AppDataSource.destroy();
         }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { Service } from "../src/models/Service";
-import { User } from "../src/models/User";
+
 
 export const postServices = async (req: Request, res: Response) => {
     try {
@@ -17,7 +17,6 @@ export const postServices = async (req: Request, res: Response) => {
             data: newService
         })
 
-
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -29,7 +28,6 @@ export const postServices = async (req: Request, res: Response) => {
 
 export const getServices = async (req: Request, res: Response) => {
     try {
-
         const services = await Service.find({
             select: {
                 id: true,
@@ -57,7 +55,7 @@ export const putServiceId = async (req: Request, res: Response) => {
         const serviceId = req.params.id;
         const { service_name, description } = req.body;
 
-        // validar datos
+        // validate data
         const service = await Service.findOneBy({
             id: parseInt(serviceId)
         })
@@ -84,21 +82,22 @@ export const putServiceId = async (req: Request, res: Response) => {
             message: "Service updated successfuly",
             data: updatedService
         })
+
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Service cannot be updated",
             error: error
         })
-
     }
-
 }
+
 export const deleteServiceId = async (req: Request, res: Response) => {
     try {
         const serviceId = req.params.id;
 
-        // validar datos
+        // validate data
         const service = await Service.findOneBy({
             id: parseInt(serviceId)
         })
@@ -110,14 +109,15 @@ export const deleteServiceId = async (req: Request, res: Response) => {
             })
         }
 
-        // actualizar DB
+        // update DB
         await Service.remove(service)
         res.status(200).json({
             success: true,
             message: "Service deleted successfuly"
-
         })
+
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Service cannot be deleted",

@@ -9,7 +9,7 @@ export const register = async (req: Request, res: Response) => {
     try {
         const { first_name, last_name, email, password } = req.body
 
-        // validación password
+        // validate password
         if (password.length < 6 || password.length > 10) {
             return res.status(400).json({
                 success: false,
@@ -18,7 +18,7 @@ export const register = async (req: Request, res: Response) => {
         }
         const passwordEncrypted = bcrypt.hashSync(password, 8)
 
-        // validación email
+        // validate email
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
             return res.status(400).json(
@@ -44,6 +44,7 @@ export const register = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "User cannot be registered",
@@ -54,18 +55,19 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     try {
-        //recuperar info
+        // recover info
         const email = req.body.email;
         const password = req.body.password;
 
-        //validación email
+        // validate email
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
                 message: "Email and password are needed"
             })
         }
-        // buscar user en DB
+
+        // searh for user in DB
         const user = await User.findOne({
             where: {
                 email: email
@@ -82,17 +84,16 @@ export const login = async (req: Request, res: Response) => {
                 }
             }
         })
-        // dar error si no existe
+
+        // error if it does not exist
         if (!user) {
             return res.status(400).json({
                 success: false,
                 message: "User not found"
             })
         }
-        // devolver user
-        // console.log(user);
 
-        // comparar passwords
+        // if it does exist: compare passwords
         const isValidPassword = bcrypt.compareSync(password, user.passwordHash);
 
         if (!isValidPassword) {
@@ -102,16 +103,15 @@ export const login = async (req: Request, res: Response) => {
             })
         }
 
-        // crear TOKEN
+        // if password is correct, create TOKEN and log in
         const token = jwt.sign({
             userId: user.id,
             roleName: user.role.name
         },
             process.env.JWT_SECRET as string,
             {
-                expiresIn: "72h"
+                expiresIn: "72h" // optional variable parameter
             }
-
         )
 
         res.status(200).json({

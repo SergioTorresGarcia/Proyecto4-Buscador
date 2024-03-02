@@ -13,13 +13,15 @@ export const getUsers = async (req: Request, res: Response) => {
 
         const queryFilters: queryFilters = {}
 
-        // if (req.query.email) { queryFilter.email = email as string } // version simple
-        if (req.query.email) { // version más complicada, va buscando dinámicamente (i.e. "email contiene X")
+        // simple version
+        // if (req.query.email) { queryFilter.email = email as string } 
+        // if (req.query.name) { queryFilter.name = name as string }
+
+        // advanced version, it searches dinamically (i.e. "email contains XXX")
+        if (req.query.email) {
             queryFilters.email = Like("%" + req.query.email.toString() + "%");
         }
-
-        // if (req.query.name) { queryFilter.name = name as string } // version simple
-        if (req.query.name) { // version más complicada, va buscando dinámicamente (i.e. "name contiene X")
+        if (req.query.name) {
             queryFilters.name = Like("%" + req.query.name.toString() + "%");
         }
 
@@ -126,7 +128,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
         const userId = req.params.id;
         const { first_name, last_name, email, password } = req.body;
 
-        // validar datos
+        // validate data
         const user = await User.findOneBy({
             id: parseInt(userId)
         })
@@ -138,8 +140,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
             })
         }
 
-        // tratar datos (si corresponde)
-        // validación password
+        // validate password
         if (password.length < 6 || password.length > 10) {
             return res.status(400).json({
                 success: false,
@@ -148,7 +149,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
         }
         const passwordEncrypted = bcrypt.hashSync(password, 8)
 
-        // validación email
+        // validate email
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
             return res.status(400).json(
@@ -159,7 +160,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
             )
         }
 
-        // actualizar DB
+        // update DB
         const updatedUser = await User.update(
             {
                 id: parseInt(userId)
@@ -192,7 +193,7 @@ export const putSelfProfile = async (req: Request, res: Response) => {
         const userSelf = req.tokenData.userId;
         const { first_name, last_name, email, password } = req.body;
 
-        // validación password
+        // validate password
         if (password.length < 6 || password.length > 10) {
             return res.status(400).json({
                 success: false,
@@ -201,7 +202,7 @@ export const putSelfProfile = async (req: Request, res: Response) => {
         }
         const passwordEncrypted = bcrypt.hashSync(password, 8)
 
-        // actualizar DB
+        // update DB
         const updatedUser = await User.update(
             {
                 id: userSelf
@@ -234,15 +235,10 @@ export const putUserRole = async (req: Request, res: Response) => {
         const userId = req.params.id;
         const roleId = req.params.role;
 
-        // validar datos
+        // validate data
         const user = await User.findOneBy({
             id: parseInt(userId)
         })
-        // const role = await User.findOne({
-        //     where: {
-        //         role: { id: parseInt(roleId) }
-        //     }
-        // })
 
         if (!user) {
             return res.status(404).json({
@@ -251,20 +247,19 @@ export const putUserRole = async (req: Request, res: Response) => {
             })
         }
 
-        // actualizar DB
+        // update DB
         const updatedUserRole = await User.update(
             {
                 id: parseInt(userId)
             },
             {
                 role: { id: parseInt(roleId) }
-                // role: { name: roleId}
             }
         )
 
         res.status(200).json({
             success: true,
-            message: "User's Role updated successfuly",
+            message: "User's role updated successfuly",
             data: updatedUserRole
         })
     } catch (error) {
@@ -277,12 +272,11 @@ export const putUserRole = async (req: Request, res: Response) => {
     }
 }
 
-
 export const deleteUserProfile = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
 
-        // validar datos
+        // validate data
         const user = await User.findOneBy({
             id: parseInt(userId)
         })
@@ -294,13 +288,14 @@ export const deleteUserProfile = async (req: Request, res: Response) => {
             })
         }
 
-        // actualizar DB
+        // update DB
         await User.remove(user)
         res.status(200).json({
             success: true,
             message: "User deleted successfuly"
 
         })
+
     } catch (error) {
         res.status(500).json({
             success: false,

@@ -17,8 +17,8 @@ export const postAppointments = async (req: Request, res: Response) => {
             data: newAppointment
         })
 
-
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Appointment cannot be created",
@@ -52,6 +52,7 @@ export const getAppointments = async (req: Request, res: Response) => {
         })
     }
 }
+
 export const getAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id
@@ -72,7 +73,9 @@ export const getAppointmentId = async (req: Request, res: Response) => {
             message: "Appointment retrieved successfuly",
             data: appointment
         })
+
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Appointment cannot be retrieved",
@@ -80,12 +83,13 @@ export const getAppointmentId = async (req: Request, res: Response) => {
         })
     }
 }
+
 export const putAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id;
         const { appointment_date, user_id, service_id } = req.body;
 
-        // validar datos
+        // validate data
         const appointment = await Appointment.findOneBy({
             id: parseInt(appointmentId)
         })
@@ -122,11 +126,12 @@ export const putAppointmentId = async (req: Request, res: Response) => {
         })
     }
 }
+
 export const deleteAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.params.id;
 
-        // validar datos
+        // validate data
         const appointment = await Appointment.findOneBy({
             id: parseInt(appointmentId)
         })
@@ -138,14 +143,16 @@ export const deleteAppointmentId = async (req: Request, res: Response) => {
             })
         }
 
-        // actualizar DB
+        // update DB
         await Appointment.remove(appointment)
         res.status(200).json({
             success: true,
             message: "Appointment deleted successfuly"
 
         })
+
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Appointment cannot be deleted",

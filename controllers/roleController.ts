@@ -7,14 +7,14 @@ export const getRoles = (req: Request, res: Response) => {
         message: "Roles retrieved successfuly"
     })
     console.log(req.body);
-
 }
+
 export const createRole = async (req: Request, res: Response) => {
     try {
-        // recuperar la info a traves del body
+        // recover info through the body
         const name = req.body.name;
 
-        // validación del largo del input
+        // validate input's length
         if (name.length >= 40 || name.length <= 0) {
             return res.status(400).json({
                 success: false,
@@ -22,9 +22,7 @@ export const createRole = async (req: Request, res: Response) => {
             })
         }
 
-        // podriamos tratar el dato
-
-        // guardamos el dato
+        // save data
         const newRole = await Role.create({
             name: name
         }).save()
@@ -36,6 +34,7 @@ export const createRole = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Role cannot be created",
@@ -47,11 +46,9 @@ export const createRole = async (req: Request, res: Response) => {
 export const updateRole = async (req: Request, res: Response) => {
 
     try {
-        // recuperar la info a traves del body
         const name = req.body.name;
         const userId = parseInt(req.params.id);
 
-        // validación del largo del input
         if (name.length >= 40 || name.length <= 0) {
             return res.status(400).json({
                 success: false,
@@ -59,14 +56,10 @@ export const updateRole = async (req: Request, res: Response) => {
             })
         }
 
-        // podriamos tratar el dato
-
-        // guardamos el dato
         const newRole = await Role.update(
             { name: name },
             { id: userId }
         )
-
 
         res.status(200).json({
             success: true,
@@ -75,6 +68,7 @@ export const updateRole = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Role was not updated",
@@ -82,6 +76,7 @@ export const updateRole = async (req: Request, res: Response) => {
         })
     }
 }
+
 export const deleteRole = (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.id);
@@ -94,7 +89,9 @@ export const deleteRole = (req: Request, res: Response) => {
             "success": true,
             "message": "Role deleted successfuly"
         })
+
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: "Role was not updated",

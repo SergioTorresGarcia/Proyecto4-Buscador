@@ -2,9 +2,7 @@ import "dotenv/config";
 import { app } from "./app";
 import { AppDataSource } from "./database/db";
 
-
 const PORT = process.env.PORT || 4000
-
 
 const startServer = () => {
     AppDataSource.initialize()
@@ -18,7 +16,6 @@ const startServer = () => {
             console.log(error)
         })
 }
-
 
 startServer();
 // npm run dev <- command that runs the server
