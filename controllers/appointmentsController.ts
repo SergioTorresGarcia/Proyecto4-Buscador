@@ -29,13 +29,24 @@ export const postAppointments = async (req: Request, res: Response) => {
 
 export const getAppointments = async (req: Request, res: Response) => {
     try {
+
+        let limit = Number(req.query.limit) || 10
+        const page = req.query.page || 1
+        const skip = (Number(page) - 1) * limit
+
+        if (limit > 10) {
+            limit = 10
+        }
+
         const appointment = await Appointment.find({
             select: {
                 id: true,
                 appointmentDate: true,
                 userId: true,
                 serviceId: true
-            }
+            },
+            take: limit,
+            skip: skip
         });
 
         res.status(200).json({
@@ -55,10 +66,10 @@ export const getAppointments = async (req: Request, res: Response) => {
 
 export const getAppointmentId = async (req: Request, res: Response) => {
     try {
-        const appointmentId = req.params.id
+        const appointmentId = req.tokenData.userId
 
         const appointment = await Appointment.findOneBy({
-            id: parseInt(appointmentId)
+            id: appointmentId
         })
 
         if (!appointment) {

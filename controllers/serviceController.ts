@@ -28,12 +28,23 @@ export const postServices = async (req: Request, res: Response) => {
 
 export const getServices = async (req: Request, res: Response) => {
     try {
+
+        let limit = Number(req.query.limit) || 10
+        const page = req.query.page || 1
+        const skip = (Number(page) - 1) * limit
+
+        if (limit > 10) {
+            limit = 10
+        }
+
         const services = await Service.find({
             select: {
                 id: true,
                 serviceName: true,
                 description: true
-            }
+            },
+            take: limit,
+            skip: skip
         });
 
         res.status(200).json({

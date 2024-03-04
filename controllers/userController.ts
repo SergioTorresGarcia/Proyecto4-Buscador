@@ -11,6 +11,7 @@ export const getUsers = async (req: Request, res: Response) => {
             name?: FindOperator<string>
         }
 
+
         const queryFilters: queryFilters = {}
 
         // simple version
@@ -25,6 +26,13 @@ export const getUsers = async (req: Request, res: Response) => {
             queryFilters.name = Like("%" + req.query.name.toString() + "%");
         }
 
+        let limit = Number(req.query.limit) || 10
+        const page = req.query.page || 1
+        const skip = (Number(page) - 1) * limit
+
+        if (limit > 10) {
+            limit = 10
+        }
         const users = await User.find({
 
             where: queryFilters,
@@ -34,6 +42,8 @@ export const getUsers = async (req: Request, res: Response) => {
                 lastName: true,
                 email: true,
             },
+            take: limit,
+            skip: skip,
             relations: {
                 role: true
             }

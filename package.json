@@ -8,10 +8,9 @@
     "dev": "nodemon ./src/server.ts ",
     "run-migrations": "typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts",
     "revert-migrations": "typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts",
-    "seed-roles": "ts-node ./src/database/seeders/roleSeeder.ts",
-    "seed-users": "ts-node ./src/database/seeders/userSeeder.ts",
-    "seed-services": "ts-node ./src/database/seeders/serviceSeeder.ts",
-    "seed-appointments": "ts-node ./src/database/seeders/appointmentSeeder.ts"
+    "seeders": "ts-node ./src/database/seeders/seeders.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
   },
   "author": "",
   "license": "ISC",
