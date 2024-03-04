@@ -17,6 +17,7 @@ This is the FOURTH PROJECT of the Full Stack Development Bootcamp with <a href="
     <li><a href="#instalation-local">Instalation</a></li>
     <li><a href="#endpoints">Endpoints</a></li>
     <li><a href="#project-development">Project development</a></li>
+    <li><a href="#deployment">Deployment</a></li>
     <li><a href="#author">Author / Contact </a></li>
   </ol>
 </details>
@@ -75,7 +76,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   REGISTER new user
     
-        POST http://localhost:4002/api/auth/register
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/auth/register
 
     body:
     
@@ -90,7 +91,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   LOGIN user
 
-        POST http://localhost:4002/api/auth/login
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/auth/login
         
     body:
 
@@ -106,16 +107,16 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   GET ALL USERS  (including dinamic query search)
 
-        GET http://localhost:4002/api/users
-        GET http://localhost:4002/api/users?email=example@domain.com
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users?email=example@domain.com
 
 - GET USER BY ID
 
-    GET http://localhost:4002/api/users/:id
+    GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
 
 -   UPDATE PROFILE (for the currently logged user)
 
-        PUT http://localhost:4002/api/users/self
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/self
 
     body:
 
@@ -129,57 +130,57 @@ personales, visualizables únicamente por el propio usuario (perfil).
     ```
 -   UPDATE USER BY ID
 
-        PUT http://localhost:4002/api/users/:id
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
 
 -   UPDATE USER'S ROLE
 
-        PUT http://localhost:4002/api/users/:id/:roleId
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id/:roleId
 
 -   DELETE USER BY ID
 
-        DELETE http://localhost:4002/api/users/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
 </details>
 <details>
 <summary>SERVICES routes</summary>
 
 -   CREATE A NEW SERVICE
 
-        POST http://localhost:4002/api/services
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services
 
 -   GET ALL SERVICES
 
-        GET http://localhost:4002/api/services
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services
 
 -   UPDATE SERVICE BY ID
 
-        UPDATE http://localhost:4002/api/services/:id
+        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services/:id
 
 -   DELETE SERVICE BY ID
 
-        DELETE http://localhost:4002/api/services/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services/:id
 </details>
 <details>
 <summary>APPOINTMENTS routes</summary>
 
 -   CREATE A NEW APPOINTMENT
 
-        POST http://localhost:4002/api/appointments
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments
 
 -   GET ALL APPOINTMENTS
 
-        GET http://localhost:4002/api/appointments
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments
 
 -   GET APPOINTMENTS BY ID
 
-        GET http://localhost:4002/api/appointments/:id
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
 
 -   UPDATE APPOINTMENTS BY ID
 
-        UPDATE http://localhost:4002/api/appointments/:id
+        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
 
 -   DELETE APPOINTMENTS BY ID
 
-        DELETE http://localhost:4002/api/appointments/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
 
 </details>
 
@@ -362,6 +363,13 @@ you will need -h (host), -P (port), -u (username) and -p (password)
 
 - Follow steps 5 and 6 of the <a href="#instalation-local">instalation</a>
 </details>
+
+
+## Deployment
+The project is deplyed here:
+https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/
+
+You can use this route for all the endpoints.
 
 
 ## Author
