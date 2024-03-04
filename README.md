@@ -1,6 +1,6 @@
 # TATTOO STUDIO searching engine
 
-This is the FOURTH PROJECT of the Full Stack Development Bootcamp with Geekshubs Academy.
+This is the FOURTH PROJECT of the Full Stack Development Bootcamp with <a href="https://github.com/GeeksHubsAcademy" target="_blank">Geekshubs Academy</a>.
 
 ![Tattoo studio](./img/modern-and-creative-tattoo-parlor-with-a-chair-brutal-interior-design-photo.jpg)
 
@@ -9,7 +9,7 @@ This is the FOURTH PROJECT of the Full Stack Development Bootcamp with Geekshubs
 </div>
 
 <details>
-  <summary>Table of Contents 🗂️</summary>
+  <summary>Table of Contents</summary>
   <ol>
     <li><a href="#project-description-es">Description (ES)</a></li>
     <li><a href="#challenge">Challenge</a></li>
@@ -23,7 +23,7 @@ This is the FOURTH PROJECT of the Full Stack Development Bootcamp with Geekshubs
 
 
 ## Project description (ES)
-##### Appointment management tool for a tattoo studio
+##### Services management tool for a tattoo studio
 
 <details>
   <summary>Read about it (only in spanish)</summary>
@@ -57,13 +57,9 @@ personales, visualizables únicamente por el propio usuario (perfil).
 1.  Clone this repository
 2.  Run ` $ npm install ` in terminal
 3.  Conect repository with database 
-4.  Run migrations:  ```$ npm run run-migrations```
-5.  *Run seeders:
-    ```$ npm run seed-roles```
-    ```$ npm run seed-users```
-    ```$ npm run seed-services```
-    ```$ npm run seed-appointments```
-6.  Start server:   ``` $ npm run dev ``` 
+4.  Run migrations:  ` $ npm run run-migrations `
+5.  *Run seeders:  ` $ npm run seeders `
+6.  Start server:  ` $ npm run dev `
 
 ##### *Alternative to step 5:
 - you can select and copy ALL TEXT from the `"data.sql"` file
@@ -186,6 +182,13 @@ personales, visualizables únicamente por el propio usuario (perfil).
         DELETE http://localhost:4002/api/appointments/:id
 
 </details>
+
+<br />
+Find here the collection of all endpoints in Thunder Client:
+
+1. You have to open Thunder Client
+2. Go to collections
+3. Import this file: `./HTTP/thunder-collection_STUDIO TATTOO.json`
 
 
 ## Project Development:
@@ -332,7 +335,7 @@ you will need -h (host), -P (port), -u (username) and -p (password)
 </details>
 
 <details>
-  <summary>11. other INFO</summary>
+  <summary>11. TOKENDATA</summary>
 
 - For the TOKEN to work, we create a new file `./types/index.d.ts` with the following lines:
 
@@ -351,6 +354,15 @@ you will need -h (host), -P (port), -u (username) and -p (password)
     }
     ```
 </details>
+
+<details>
+  <summary>12. SEEDERS</summary>
+
+- In order to check out this project, you'll need to ppopulate the database.
+
+- Follow steps 5 and 6 of the <a href="#instalation-local">instalation</a>
+</details>
+
 
 ## Author
 <div align="center">
