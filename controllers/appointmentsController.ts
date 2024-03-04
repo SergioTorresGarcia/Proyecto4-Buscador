@@ -68,8 +68,23 @@ export const getAppointmentId = async (req: Request, res: Response) => {
     try {
         const appointmentId = req.tokenData.userId
 
-        const appointment = await Appointment.findOneBy({
-            id: appointmentId
+        const appointment = await Appointment.findOne({
+            where: { id: appointmentId },
+            relations: {
+                service: true,
+                user: true
+            },
+            select: {
+                appointmentDate: true,
+                service: {
+                    serviceName: true
+                },
+                user: {
+                    id: true,
+                    firstName: true,
+                    lastName: true
+                }
+            }
         })
 
         if (!appointment) {

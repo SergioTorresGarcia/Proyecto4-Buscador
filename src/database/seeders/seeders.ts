@@ -1,4 +1,6 @@
 
+import bcrypt from "bcrypt";
+
 import { Role } from "../../models/Role";
 import { User } from "../../models/User";
 import { Service } from "../../models/Service";
@@ -34,7 +36,9 @@ const roleSeedDatabase = async () => {
         roleSuper.name = "superadmin"
         await roleSuper.save();
 
+        console.log("---------------------");
         console.log("Roles saved correctly");
+        console.log("---------------------");
 
     } catch (error) {
         console.log(error);
@@ -54,7 +58,7 @@ const generateFakeUsers = () => {
     user.lastName = faker.person.lastName();
     user.email = faker.internet.email();
     // we hardcode a hashed password we already know 
-    user.passwordHash = "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO"; // 123456
+    user.passwordHash = bcrypt.hashSync("123456", 8)  // 123456
 
     return user;
 }
@@ -69,7 +73,7 @@ const userSeedDatabase = async () => {
         superadmin.firstName = "Super";
         superadmin.lastName = "Super";
         superadmin.email = "super@super.com";
-        superadmin.passwordHash = "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO"; // 123456
+        superadmin.passwordHash = bcrypt.hashSync("123456", 8)  // 123456
         superadmin.role = new Role();
         superadmin.role.id = 3;
         superadmin.save();
@@ -79,7 +83,7 @@ const userSeedDatabase = async () => {
         admin.firstName = "Admin";
         admin.lastName = "Admin";
         admin.email = "admin@admin.com";
-        admin.passwordHash = "$2b$08$NZOf4QPFlzzaiUiuBI76e.SDWK3RAnkjN.daswlTqPdrBdf86MXNO"; // 123456
+        admin.passwordHash = bcrypt.hashSync("123456", 8) // 123456
         admin.role = new Role();
         admin.role.id = 2;
         admin.save();
@@ -88,7 +92,9 @@ const userSeedDatabase = async () => {
         const fakeUsers = Array.from({ length: num_users - 2 }, generateFakeUsers);
         await User.save(fakeUsers);
 
+        console.log("---------------------");
         console.log("Users saved correctly");
+        console.log("---------------------");
 
     } catch (error) {
 
@@ -138,7 +144,9 @@ const serviceSeedDatabase = async () => {
         service5.description = "Además de nuestros servicios de aplicación, ofrecemos una selección de piercings y otros artículos relacionados con el arte corporal. Los clientes pueden adquirir productos de calidad para complementar su estilo único."
         await service5.save();
 
+        console.log("------------------------");
         console.log("Services saved correctly");
+        console.log("------------------------");
 
     } catch (error) {
         console.log(error);
@@ -173,7 +181,9 @@ const appointmentSeedDatabase = async () => {
         const fakeAppointments = Array.from({ length: num_appointments }, generateFakeAppointments);
         await Appointment.save(fakeAppointments);
 
+        console.log("----------------------------");
         console.log("Appointments saved correctly");
+        console.log("----------------------------");
 
     } catch (error) {
 
