@@ -57,7 +57,6 @@ const generateFakeUsers = () => {
     user.firstName = faker.person.firstName();
     user.lastName = faker.person.lastName();
     user.email = faker.internet.email();
-    // we hardcode a hashed password we already know 
     user.passwordHash = bcrypt.hashSync("123456", 8)  // 123456
 
     return user;

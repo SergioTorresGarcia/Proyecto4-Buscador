@@ -3,37 +3,22 @@ import { Request, Response } from "express"
 import bcrypt from "bcrypt";
 import { User } from "../src/models/User";
 import jwt from "jsonwebtoken";
+import { isValidPassword } from "../helpers/passwordValidation";
+import { isValidEmail } from "../helpers/emailValidation";
 
 
 export const register = async (req: Request, res: Response) => {
     try {
         const { first_name, last_name, email, password } = req.body
 
-        // validate password
-        if (password.length < 6 || password.length > 10) {
-            return res.status(400).json({
-                success: false,
-                message: "Password invalid"
-            })
-        }
-        const passwordEncrypted = bcrypt.hashSync(password, 8)
-
-        // validate email
-        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
-        if (!validEmail.test(email)) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "format email invalid"
-                }
-            )
-        }
+        isValidPassword(password)
+        isValidEmail(email)
 
         const newUser = await User.create({
             firstName: first_name,
             lastName: last_name,
             email: email,
-            passwordHash: passwordEncrypted,
+            passwordHash: password,
             role: { id: 1 }
         }).save()
 
@@ -59,7 +44,6 @@ export const login = async (req: Request, res: Response) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        // validate email
         if (!email || !password) {
             return res.status(400).json({
                 success: false,

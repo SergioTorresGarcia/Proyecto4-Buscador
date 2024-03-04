@@ -81,6 +81,12 @@ export const deleteRole = (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.id);
 
+        if (!userId) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
         Role.delete(
             { id: userId }
         )

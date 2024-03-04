@@ -116,8 +116,10 @@ export const putAppointmentId = async (req: Request, res: Response) => {
         const { appointment_date, user_id, service_id } = req.body;
 
         // validate data
-        const appointment = await Appointment.findOneBy({
-            id: parseInt(appointmentId)
+        const appointment = await Appointment.findOne({
+            where: {
+                id: parseInt(appointmentId)
+            }
         })
 
         if (!appointment) {
@@ -158,8 +160,10 @@ export const deleteAppointmentId = async (req: Request, res: Response) => {
         const appointmentId = req.params.id;
 
         // validate data
-        const appointment = await Appointment.findOneBy({
-            id: parseInt(appointmentId)
+        const appointment = await Appointment.findOne({
+            where: {
+                id: parseInt(appointmentId)
+            }
         })
 
         if (!appointment) {

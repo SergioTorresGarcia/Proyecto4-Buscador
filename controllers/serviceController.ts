@@ -67,8 +67,10 @@ export const putServiceId = async (req: Request, res: Response) => {
         const { service_name, description } = req.body;
 
         // validate data
-        const service = await Service.findOneBy({
-            id: parseInt(serviceId)
+        const service = await Service.findOne({
+            where: {
+                id: parseInt(serviceId)
+            }
         })
 
         if (!service) {
@@ -109,8 +111,10 @@ export const deleteServiceId = async (req: Request, res: Response) => {
         const serviceId = req.params.id;
 
         // validate data
-        const service = await Service.findOneBy({
-            id: parseInt(serviceId)
+        const service = await Service.findOne({
+            where: {
+                id: parseInt(serviceId)
+            }
         })
 
         if (!service) {

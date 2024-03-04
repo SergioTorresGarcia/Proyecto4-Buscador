@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../src/models/User";
 import { FindOperator, Like } from "typeorm";
-
+import { isValidPassword } from "../helpers/passwordValidation"
+import { isValidEmail } from "../helpers/emailValidation";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -10,7 +11,6 @@ export const getUsers = async (req: Request, res: Response) => {
             email?: FindOperator<string>,
             name?: FindOperator<string>
         }
-
 
         const queryFilters: queryFilters = {}
 
@@ -69,8 +69,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id
 
-        const user = await User.findOneBy({
-            id: parseInt(userId)
+        const user = await User.findOne({
+            where: {
+                id: parseInt(userId)
+            }
         })
 
         if (!user) {
@@ -98,12 +100,15 @@ export const getUserProfile = async (req: Request, res: Response) => {
 export const getUserByEmail = async (req: Request, res: Response) => {
     try {
         const userEmail = req.query.email as string
+
         if (!userEmail) {
             return res.status(400).json({
                 success: false,
                 message: "Email is required"
             });
         }
+
+        isValidEmail(userEmail)
 
         const user = await User.find({
             where: {
@@ -139,8 +144,10 @@ export const putUserProfile = async (req: Request, res: Response) => {
         const { first_name, last_name, email, password } = req.body;
 
         // validate data
-        const user = await User.findOneBy({
-            id: parseInt(userId)
+        const user = await User.findOne({
+            where: {
+                id: parseInt(userId)
+            }
         })
 
         if (!user) {
@@ -150,25 +157,8 @@ export const putUserProfile = async (req: Request, res: Response) => {
             })
         }
 
-        // validate password
-        if (password.length < 6 || password.length > 10) {
-            return res.status(400).json({
-                success: false,
-                message: "Password invalid"
-            })
-        }
-        const passwordEncrypted = bcrypt.hashSync(password, 8)
-
-        // validate email
-        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
-        if (!validEmail.test(email)) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "format email invalid"
-                }
-            )
-        }
+        isValidPassword(password)
+        isValidEmail(email)
 
         // update DB
         const updatedUser = await User.update(
@@ -179,7 +169,7 @@ export const putUserProfile = async (req: Request, res: Response) => {
                 firstName: first_name,
                 lastName: last_name,
                 email: email,
-                passwordHash: passwordEncrypted
+                passwordHash: password
             }
         )
 
@@ -203,14 +193,7 @@ export const putSelfProfile = async (req: Request, res: Response) => {
         const userSelf = req.tokenData.userId;
         const { first_name, last_name, email, password } = req.body;
 
-        // validate password
-        if (password.length < 6 || password.length > 10) {
-            return res.status(400).json({
-                success: false,
-                message: "Password invalid"
-            })
-        }
-        const passwordEncrypted = bcrypt.hashSync(password, 8)
+        isValidPassword(password)
 
         // update DB
         const updatedUser = await User.update(
@@ -221,7 +204,7 @@ export const putSelfProfile = async (req: Request, res: Response) => {
                 firstName: first_name,
                 lastName: last_name,
                 email: email,
-                passwordHash: passwordEncrypted
+                passwordHash: password
             }
         )
 
@@ -246,8 +229,10 @@ export const putUserRole = async (req: Request, res: Response) => {
         const roleId = req.params.role;
 
         // validate data
-        const user = await User.findOneBy({
-            id: parseInt(userId)
+        const user = await User.findOne({
+            where: {
+                id: parseInt(userId)
+            }
         })
 
         if (!user) {
@@ -287,8 +272,10 @@ export const deleteUserProfile = async (req: Request, res: Response) => {
         const userId = req.params.id;
 
         // validate data
-        const user = await User.findOneBy({
-            id: parseInt(userId)
+        const user = await User.findOne({
+            where: {
+                id: parseInt(userId)
+            }
         })
 
         if (!user) {
