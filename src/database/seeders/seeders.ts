@@ -164,10 +164,10 @@ const generateFakeAppointments = () => {
     appointment.appointmentDate = faker.date.future();
 
     let randomUser = Math.floor(Math.random() * num_users + 1)
-    appointment.userId = randomUser.toString();
+    appointment.userId = randomUser;
 
     let randomService = Math.floor(Math.random() * num_services + 1)
-    appointment.serviceId = randomService.toString();
+    appointment.serviceId = randomService;
 
     return appointment;
 }

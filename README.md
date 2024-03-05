@@ -112,7 +112,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 - GET USER BY ID
 
-    GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
+      GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
 
 -   UPDATE PROFILE (for the currently logged user)
 
@@ -366,7 +366,7 @@ you will need -h (host), -P (port), -u (username) and -p (password)
 
 
 ## Deployment
-The project is deplyed here:
+The project is deployed here:
 https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/
 
 You can use this route for all the endpoints.

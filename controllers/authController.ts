@@ -5,20 +5,21 @@ import { User } from "../src/models/User";
 import jwt from "jsonwebtoken";
 import { isValidPassword } from "../helpers/passwordValidation";
 import { isValidEmail } from "../helpers/emailValidation";
+import { Role } from "../src/models/Role";
 
 
 export const register = async (req: Request, res: Response) => {
     try {
         const { first_name, last_name, email, password } = req.body
 
-        isValidPassword(password)
-        isValidEmail(email)
+        const passValid = isValidPassword(password)
+        const emailValid = isValidEmail(email)
 
         const newUser = await User.create({
             firstName: first_name,
             lastName: last_name,
-            email: email,
-            passwordHash: password,
+            email: emailValid,
+            passwordHash: passValid,
             role: { id: 1 }
         }).save()
 

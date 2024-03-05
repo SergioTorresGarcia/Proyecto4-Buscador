@@ -9,7 +9,7 @@ export const getUsers = async (req: Request, res: Response) => {
     try {
         interface queryFilters {
             email?: FindOperator<string>,
-            name?: FindOperator<string>
+            firstName?: FindOperator<string>
         }
 
         const queryFilters: queryFilters = {}
@@ -22,8 +22,8 @@ export const getUsers = async (req: Request, res: Response) => {
         if (req.query.email) {
             queryFilters.email = Like("%" + req.query.email.toString() + "%");
         }
-        if (req.query.name) {
-            queryFilters.name = Like("%" + req.query.name.toString() + "%");
+        if (req.query.firstName) {
+            queryFilters.firstName = Like("%" + req.query.firstName.toString() + "%");
         }
 
         let limit = Number(req.query.limit) || 10
@@ -33,6 +33,7 @@ export const getUsers = async (req: Request, res: Response) => {
         if (limit > 10) {
             limit = 10
         }
+
         const users = await User.find({
 
             where: queryFilters,
@@ -67,11 +68,10 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
-        const userId = req.params.id
-
+        const userId = parseInt(req.params.id);
         const user = await User.findOne({
             where: {
-                id: parseInt(userId)
+                id: userId
             }
         })
 
@@ -97,56 +97,16 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
 }
 
-export const getUserByEmail = async (req: Request, res: Response) => {
-    try {
-        const userEmail = req.query.email as string
-
-        if (!userEmail) {
-            return res.status(400).json({
-                success: false,
-                message: "Email is required"
-            });
-        }
-
-        isValidEmail(userEmail)
-
-        const user = await User.find({
-            where: {
-                email: userEmail
-            }
-        })
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found"
-            })
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "User retrieved successfuly",
-            data: user
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "User cannot be retrieved",
-            error: error
-        })
-    }
-
-}
 
 export const putUserProfile = async (req: Request, res: Response) => {
     try {
-        const userId = req.params.id;
+        const userId = parseInt(req.params.id);
         const { first_name, last_name, email, password } = req.body;
 
         // validate data
         const user = await User.findOne({
             where: {
-                id: parseInt(userId)
+                id: userId
             }
         })
 
@@ -157,19 +117,19 @@ export const putUserProfile = async (req: Request, res: Response) => {
             })
         }
 
-        isValidPassword(password)
-        isValidEmail(email)
+        const pass = isValidPassword(password)
+        const emailValid = isValidEmail(email)
 
         // update DB
         const updatedUser = await User.update(
             {
-                id: parseInt(userId)
-            },
-            {
                 firstName: first_name,
                 lastName: last_name,
-                email: email,
-                passwordHash: password
+                email: emailValid,
+                passwordHash: pass
+            },
+            {
+                id: userId
             }
         )
 
@@ -190,33 +150,49 @@ export const putUserProfile = async (req: Request, res: Response) => {
 
 export const putSelfProfile = async (req: Request, res: Response) => {
     try {
-        const userSelf = req.tokenData.userId;
+        const meId = req.tokenData.userId;
         const { first_name, last_name, email, password } = req.body;
 
-        isValidPassword(password)
+        const pass = isValidPassword(password)
+        const emailValid = isValidEmail(email)
+
+        const userProfile = await User.findOne({
+            where: {
+                id: meId
+            }
+        })
+
+        if (!userProfile) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
 
         // update DB
-        const updatedUser = await User.update(
-            {
-                id: userSelf
-            },
+        const updatedProfile = await User.update(
             {
                 firstName: first_name,
                 lastName: last_name,
-                email: email,
-                passwordHash: password
+                email: emailValid,
+                passwordHash: pass
+            },
+            {
+                id: meId
             }
         )
 
+
         res.status(200).json({
             success: true,
-            message: "User updated successfuly",
-            data: updatedUser
+            message: "Your profile has been updated successfuly",
+            data: updatedProfile
         })
     } catch (error) {
+
         res.status(500).json({
             success: false,
-            message: "User cannot be updated",
+            message: "Your profile cannot be updated",
             error: error
         })
 
