@@ -97,8 +97,8 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
     ``` js
         {
-            "email": "sergio@sergio.com",
-            "password": "111111"
+            "email": "super@super.com",
+            "password": "123456"
         }
     ```
 </details>
