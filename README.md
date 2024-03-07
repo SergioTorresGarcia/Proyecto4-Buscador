@@ -76,7 +76,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   REGISTER new user
     
-        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/auth/register
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/auth/register
 
     body:
     
@@ -91,7 +91,7 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   LOGIN user
 
-        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/auth/login
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/auth/login
         
     body:
 
@@ -107,16 +107,16 @@ personales, visualizables únicamente por el propio usuario (perfil).
 
 -   GET ALL USERS  (including dinamic query search)
 
-        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users
-        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users?email=example@domain.com
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users?email=example@domain.com
 
 - GET USER BY ID
 
-      GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
+      GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users/:id
 
 -   UPDATE PROFILE (for the currently logged user)
 
-        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/self
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users/self
 
     body:
 
@@ -130,57 +130,60 @@ personales, visualizables únicamente por el propio usuario (perfil).
     ```
 -   UPDATE USER BY ID
 
-        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users/:id
 
 -   UPDATE USER'S ROLE
 
-        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id/:roleId
+        PUT https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users/:id/:role
 
 -   DELETE USER BY ID
 
-        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/users/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/users/:id
 </details>
 <details>
 <summary>SERVICES routes</summary>
 
 -   CREATE A NEW SERVICE
 
-        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/services
 
 -   GET ALL SERVICES
 
-        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/services
 
 -   UPDATE SERVICE BY ID
 
-        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services/:id
+        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/services/:id
 
 -   DELETE SERVICE BY ID
 
-        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/services/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/services/:id
 </details>
 <details>
 <summary>APPOINTMENTS routes</summary>
 
 -   CREATE A NEW APPOINTMENT
 
-        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments
+        POST https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments
 
 -   GET ALL APPOINTMENTS
 
-        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments
+-   GET OWN APPOINTMENTS
 
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments/profile
+        
 -   GET APPOINTMENTS BY ID
 
-        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
+        GET https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments/:id
 
 -   UPDATE APPOINTMENTS BY ID
 
-        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
+        UPDATE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments/:id
 
 -   DELETE APPOINTMENTS BY ID
 
-        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io//api/appointments/:id
+        DELETE https://proyecto4-buscador-dev-jzta.1.ie-1.fl0.io/api/appointments/:id
 
 </details>
 

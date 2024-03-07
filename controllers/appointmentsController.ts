@@ -56,6 +56,7 @@ export const getAppointments = async (req: Request, res: Response) => {
         }
 
         const appointment = await Appointment.find({
+
             select: {
                 id: true,
                 appointmentDate: true,
