@@ -6,6 +6,7 @@ import { userRouter } from "./routes/userRoutes";
 import { serviceRouter } from "./routes/serviceRoutes";
 import { appointmentRouter } from "./routes/appointmentsRoutes";
 
+
 export const app = express();
 app.use(express.json());
 

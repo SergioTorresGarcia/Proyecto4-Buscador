@@ -3,7 +3,7 @@ import { Router } from "express";
 
 export const roleRouter = Router();
 
-import { createRole, deleteRole, getRoles, updateRole } from "../../controllers/roleController"
+import { createRole, deleteRole, getRoles, updateRole } from "../controllers/roleController"
 
 // Roles:
 roleRouter.get("/roles", getRoles) // <--------------------------------------------- WORKING!!!  XTRA

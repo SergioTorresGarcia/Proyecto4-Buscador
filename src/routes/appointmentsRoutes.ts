@@ -4,7 +4,7 @@ import { Router } from "express";
 export const appointmentRouter = Router();
 
 import { auth } from "../middlewares/auth";
-import { deleteAppointmentId, getAppointmentId, getAppointments, postAppointments, putAppointmentId, getOwnAppointments } from "../../controllers/appointmentsController";
+import { deleteAppointmentId, getAppointmentId, getAppointments, postAppointments, putAppointmentId, getOwnAppointments } from "../controllers/appointmentsController";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
 
 

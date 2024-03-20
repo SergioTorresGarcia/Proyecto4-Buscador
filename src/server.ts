@@ -1,8 +1,11 @@
 import "dotenv/config";
+import cors from 'cors';
 import { app } from "./app";
 import { AppDataSource } from "./database/db";
 
 const PORT = process.env.PORT || 4000
+
+app.use(cors());
 
 const startServer = () => {
     AppDataSource.initialize()

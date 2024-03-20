@@ -5,7 +5,7 @@ export const serviceRouter = Router();
 
 import { auth } from "../middlewares/auth";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
-import { deleteServiceId, getServices, postServices, putServiceId } from "../../controllers/serviceController";
+import { deleteServiceId, getServices, postServices, putServiceId } from "../controllers/serviceController";
 
 
 // Services:
