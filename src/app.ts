@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 import { roleRouter } from "./routes/roleRoutes";
 import { authRouter } from "./routes/authRoutes";
@@ -6,9 +7,9 @@ import { userRouter } from "./routes/userRoutes";
 import { serviceRouter } from "./routes/serviceRoutes";
 import { appointmentRouter } from "./routes/appointmentsRoutes";
 
-
 export const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/alive", (req, res) => {
     res.send("Server is alive")

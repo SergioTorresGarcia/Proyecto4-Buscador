@@ -57,7 +57,7 @@ const generateFakeUsers = () => {
     user.firstName = faker.person.firstName();
     user.lastName = faker.person.lastName();
     user.email = faker.internet.email();
-    user.passwordHash = bcrypt.hashSync("123456", 8)  // 123456
+    user.passwordHash = bcrypt.hashSync("Aa123456", 8)
 
     return user;
 }
@@ -72,7 +72,7 @@ const userSeedDatabase = async () => {
         superadmin.firstName = "Super";
         superadmin.lastName = "Super";
         superadmin.email = "super@super.com";
-        superadmin.passwordHash = bcrypt.hashSync("123456", 8)  // 123456
+        superadmin.passwordHash = bcrypt.hashSync("Aa123456", 8)  // 123456
         superadmin.role = new Role();
         superadmin.role.id = 3;
         superadmin.save();
@@ -82,7 +82,7 @@ const userSeedDatabase = async () => {
         admin.firstName = "Admin";
         admin.lastName = "Admin";
         admin.email = "admin@admin.com";
-        admin.passwordHash = bcrypt.hashSync("123456", 8) // 123456
+        admin.passwordHash = bcrypt.hashSync("Aa123456", 8) // 123456
         admin.role = new Role();
         admin.role.id = 2;
         admin.save();

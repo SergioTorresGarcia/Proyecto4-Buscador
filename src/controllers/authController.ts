@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express"
-import bcrypt from "bcrypt";
+import bcrypt, { hashSync } from "bcrypt";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
 import { isValidPassword } from "../helpers/passwordValidation";
@@ -11,6 +11,8 @@ import { Role } from "../models/Role";
 export const register = async (req: Request, res: Response) => {
     try {
         const { first_name, last_name, email, password } = req.body
+
+        const passwordHash = hashSync(password, 8);
 
         const passValid = isValidPassword(password)
         const emailValid = isValidEmail(email)
@@ -26,7 +28,7 @@ export const register = async (req: Request, res: Response) => {
             firstName: first_name,
             lastName: last_name,
             email: email,
-            passwordHash: password,
+            passwordHash: passwordHash,
             role: { id: 1 }
         }).save()
 
@@ -69,6 +71,7 @@ export const login = async (req: Request, res: Response) => {
             },
             select: {
                 id: true,
+                firstName: true,
                 passwordHash: true,
                 email: true,
                 role: {
@@ -97,6 +100,7 @@ export const login = async (req: Request, res: Response) => {
 
         // if password is correct, create TOKEN and log in
         const token = jwt.sign({
+            userName: user.firstName,
             userId: user.id,
             roleName: user.role.name
         },
