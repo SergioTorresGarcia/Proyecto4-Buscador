@@ -27,6 +27,10 @@ export class Users1708989530865 implements MigrationInterface {
                         isNullable: false
                     },
                     {
+                        name: "birth_date",
+                        type: "timestamp"
+                    },
+                    {
                         name: "email",
                         type: "varchar",
                         length: "100",

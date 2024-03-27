@@ -10,7 +10,7 @@ import { Role } from "../models/Role";
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const { first_name, last_name, email, password } = req.body
+        const { first_name, last_name, birthDate, email, password } = req.body
 
         const passwordHash = hashSync(password, 8);
 
@@ -27,6 +27,7 @@ export const register = async (req: Request, res: Response) => {
         const newUser = await User.create({
             firstName: first_name,
             lastName: last_name,
+            birthDate: birthDate,
             email: email,
             passwordHash: passwordHash,
             role: { id: 1 }

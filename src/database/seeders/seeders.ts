@@ -5,7 +5,7 @@ import { Role } from "../../models/Role";
 import { User } from "../../models/User";
 import { Service } from "../../models/Service";
 import { Appointment } from "../../models/Appointment";
-
+import dayjs from "dayjs"
 import { AppDataSource } from "../db";
 import { faker } from "@faker-js/faker";
 
@@ -52,10 +52,12 @@ const roleSeedDatabase = async () => {
 
 
 // create false users to populate DB (with Faker)
+const birthday = dayjs(faker.date.between({ from: '1950-01-01', to: '2006-01-01' })).format("YYYY-MM-DD")
 const generateFakeUsers = () => {
     const user = new User();
     user.firstName = faker.person.firstName();
     user.lastName = faker.person.lastName();
+    user.birthDate = birthday
     user.email = faker.internet.email();
     user.passwordHash = bcrypt.hashSync("Aa123456", 8)
 
@@ -71,24 +73,37 @@ const userSeedDatabase = async () => {
         const superadmin = new User();
         superadmin.firstName = "Super";
         superadmin.lastName = "Super";
+        superadmin.birthDate = "1983-11-28";
         superadmin.email = "super@super.com";
-        superadmin.passwordHash = bcrypt.hashSync("Aa123456", 8)  // 123456
+        superadmin.passwordHash = bcrypt.hashSync("Aa123456", 8)  // Aa123456
         superadmin.role = new Role();
         superadmin.role.id = 3;
         superadmin.save();
 
-        // hardcoded superadmin
+        // hardcoded admin
         const admin = new User();
         admin.firstName = "Admin";
         admin.lastName = "Admin";
+        admin.birthDate = "1985-04-07";
         admin.email = "admin@admin.com";
         admin.passwordHash = bcrypt.hashSync("Aa123456", 8) // 123456
         admin.role = new Role();
         admin.role.id = 2;
         admin.save();
 
+        // hardcoded user
+        const user = new User();
+        user.firstName = "User";
+        user.lastName = "User";
+        user.birthDate = "1986-12-29";
+        user.email = "user@user.com";
+        user.passwordHash = bcrypt.hashSync("Aa123456", 8) // 123456
+        user.role = new Role();
+        user.role.id = 1;
+        user.save();
+
         // fake users (with role_id = 1 by default)
-        const fakeUsers = Array.from({ length: num_users - 2 }, generateFakeUsers);
+        const fakeUsers = Array.from({ length: num_users - 3 }, generateFakeUsers);
         await User.save(fakeUsers);
 
         console.log("---------------------");

@@ -67,7 +67,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
-        const userId = parseInt(req.params.id);
+        const userId = req.tokenData.userId;
         const user = await User.findOne({
             where: {
                 id: userId
@@ -150,37 +150,37 @@ export const putUserProfile = async (req: Request, res: Response) => {
 export const putSelfProfile = async (req: Request, res: Response) => {
     try {
         const meId = req.tokenData.userId;
-        const { first_name, last_name, email, password } = req.body;
+        console.log(meId);
 
-        const pass = isValidPassword(password)
+        const { first_name, last_name, birth_date, email } = req.body;
+
         const emailValid = isValidEmail(email)
 
         const userProfile = await User.findOne({
             where: {
                 id: meId
             }
-        })
+        });
+        console.log(userProfile);
 
         if (!userProfile) {
             return res.status(404).json({
                 success: false,
                 message: "User not found"
-            })
+            });
         }
 
-        // update DB
-        const updatedProfile = await User.update(
-            {
-                firstName: first_name,
-                lastName: last_name,
-                email: emailValid,
-                passwordHash: pass
-            },
-            {
-                id: meId
-            }
-        )
+        // Update user attributes
+        userProfile.firstName = first_name as string;
+        userProfile.lastName = last_name as string;
+        userProfile.birthDate = birth_date as string;
+        userProfile.email = emailValid as string;
 
+        // Save changes to the database
+        const updatedProfile = await userProfile.save();
+
+
+        console.log(updatedProfile);
 
         res.status(200).json({
             success: true,
@@ -197,6 +197,8 @@ export const putSelfProfile = async (req: Request, res: Response) => {
 
     }
 }
+
+
 
 export const putUserRole = async (req: Request, res: Response) => {
     try {
