@@ -213,9 +213,9 @@ const appointmentSeedDatabase = async () => {
 
 
 const startSeeders = async () => {
-    await roleSeedDatabase()
-    await userSeedDatabase()
-    await serviceSeedDatabase()
+    // await roleSeedDatabase()
+    // await userSeedDatabase()
+    // await serviceSeedDatabase()
     await appointmentSeedDatabase()
 }
 

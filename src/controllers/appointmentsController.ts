@@ -4,16 +4,17 @@ import { User } from "../models/User";
 
 export const postAppointments = async (req: Request, res: Response) => {
     try {
-        const { appointmentDate, userId, serviceId } = req.body
+        const userId = req.tokenData.userId
+        const { appointmentDate, serviceId } = req.body
 
         // validate date format
-        const regexDate = /^\d{4}-\d{2}-\d{2}$/;
+        const regexDate = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
         const dateOk = regexDate.test(appointmentDate);
 
         if (!dateOk) {
             return res.status(404).json({
                 success: false,
-                message: "Incorrect date format (YYYY-MM-DD)",
+                message: "Incorrect date format (YYYY-MM-DD HH:MM)",
             })
         }
 
