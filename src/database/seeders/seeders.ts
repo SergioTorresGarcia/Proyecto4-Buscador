@@ -71,8 +71,8 @@ const userSeedDatabase = async () => {
 
         // hardcoded superadmin
         const superadmin = new User();
-        superadmin.firstName = "Super";
-        superadmin.lastName = "Super";
+        superadmin.firstName = "Superadmin";
+        superadmin.lastName = "Superadmin";
         superadmin.birthDate = "1983-11-28";
         superadmin.email = "super@super.com";
         superadmin.passwordHash = bcrypt.hashSync("Aa123456", 8)  // Aa123456

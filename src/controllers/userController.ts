@@ -41,6 +41,7 @@ export const getUsers = async (req: Request, res: Response) => {
                 firstName: true,
                 lastName: true,
                 email: true,
+                birthDate: true
             },
             take: limit,
             skip: skip,
